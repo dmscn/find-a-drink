@@ -1,26 +1,18 @@
-import React from 'react'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import { logger } from 'redux-logger'
 
-import StoreContext from '@store/config'
+import rootSaga from './sagas'
+import locationReducer from './Location'
 
-export default function Store({ children }) {
-  // const [authState, authDispatch] = useReducer(authReducer, authStore)
+const reducers = combineReducers({
+  location: locationReducer,
+})
 
-  // const triggerDispatches = action => {
-  //   const dispatchs = [counterDispatch, authDispatch]
-  //   dispatchs.forEach(dispatcher => dispatcher(action))
-  // }
+const sagaMiddleware = createSagaMiddleware()
 
-  // const combineReducers = {
-  //   store: {
-  //     ...counterState,
-  //     ...authState,
-  //   },
-  //   dispatch: action => triggerDispatches(action),
-  // }
+const store = createStore(reducers, applyMiddleware(sagaMiddleware, logger))
 
-  return (
-    <StoreContext.Provider value={() => {}}>{children}</StoreContext.Provider>
-  )
-}
+sagaMiddleware.run(rootSaga)
 
-export const useStore = () => React.useContext(StoreContext)
+export default store
