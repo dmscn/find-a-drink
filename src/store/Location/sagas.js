@@ -6,9 +6,10 @@ function* fetchLocation() {
   yield put(actionCreators.fetchLocationRequest())
 
   try {
-    const response = yield fetch(/* Location API url*/)
+    const response = yield fetch('https://jsonplaceholder.typicode.com/posts/1')
     const JSON = yield response.json()
-    yield put(actionCreators.fetchLocationSuccess(JSON.location))
+    console.log(actionCreators.fetchLocationSuccess())
+    yield put(actionCreators.fetchLocationSuccess(JSON))
   } catch (err) {
     yield put(actionCreators.fetchLocationFailure(err))
   }

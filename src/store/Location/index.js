@@ -31,6 +31,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.error,
       }
+    default:
+      return state
   }
 }
 
