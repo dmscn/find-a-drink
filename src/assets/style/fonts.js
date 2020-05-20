@@ -1,13 +1,4 @@
-const fonts = [
-  {
-    family: 'Lato',
-    weight: [400, 700, 900],
-  },
-  {
-    family: 'Source Sans Pro',
-    weight: [400],
-  },
-]
+const fonts = ['Lato', 'Source Sans Pro']
 
 ;[fonts.Lato, fonts.SourceSansPro] = fonts
 
@@ -40,7 +31,7 @@ const lineHeights = [12, 16, 20, 24, 32, 40]
 ] = lineHeights
 
 export default {
-  fonts,
+  ...fonts,
   sizes,
   weights,
   lineHeights,
