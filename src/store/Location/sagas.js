@@ -1,7 +1,9 @@
-import { put, takeEvery, call } from 'redux-saga/effects'
+import { put, debounce, call } from 'redux-saga/effects'
 import Types from './types'
 import * as actionCreators from './actions'
 import GeocoderService from '@services/api/geocoder'
+
+const DEBOUNCE_TIMEOUT = 1000
 
 export function* fetchLocation({ query, resolve, reject }) {
   yield put(actionCreators.fetchLocationRequest())
@@ -17,5 +19,5 @@ export function* fetchLocation({ query, resolve, reject }) {
 }
 
 export default function* actionWatcher() {
-  yield takeEvery(Types.LOCATION_FETCH, fetchLocation)
+  yield debounce(DEBOUNCE_TIMEOUT, Types.LOCATION_FETCH, fetchLocation)
 }
