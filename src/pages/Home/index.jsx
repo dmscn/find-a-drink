@@ -2,6 +2,16 @@ import React from 'react'
 import TextField from '@components/TextField'
 import useLocation from '@hooks/useLocation'
 
+const formatLabel = ({ street, city }) => `${street}, ${city}`
+
+const formatLocations = locations =>
+  locations
+    .filter(({ street, city }) => Boolean(street && city))
+    .map(({ latLng, ...location }) => ({
+      label: formatLabel(location),
+      value: latLng,
+    }))
+
 const Home = () => {
   const [location, setLocation] = React.useState('')
   const [suggestions, setSuggestions] = React.useState([])
@@ -10,7 +20,7 @@ const Home = () => {
   const getSuggestions = async query => {
     try {
       const locations = await getLocation(query)
-      setSuggestions(locations)
+      setSuggestions(formatLocations(locations))
     } catch (err) {
       console.error(err)
       setSuggestions([])
@@ -30,7 +40,11 @@ const Home = () => {
         value={location}
         onChange={handleTyping}
       />
-      {suggestions}
+      <ul>
+        {suggestions.map(({ label }) => (
+          <li key={label}>{label}</li>
+        ))}
+      </ul>
     </>
   )
 }

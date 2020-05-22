@@ -13,12 +13,13 @@ export async function getGeocode(geoCode) {
   const [{ locations }] = results
 
   return locations.map(location => ({
+    street: location.street,
     neighborhood: location.adminArea6,
     city: location.adminArea5,
     county: location.adminArea5,
-    state: location.adminArea4,
+    state: location.adminArea3,
     country: location.adminArea1,
-    main: location[`adminArea${location.type}`],
+    type: location.geocodeQuality.toLowerCase(),
     latLng: location.latLng,
   }))
 }
