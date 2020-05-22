@@ -37,9 +37,10 @@ const getVariantStyles = variant => (themeProps, prop) =>
   themeProps[specs[variant][prop]]
 
 const Text = styled.span`
-  ${({ variant = 'body', strong, theme: { fonts } }) => {
+  ${({ variant = 'body', strong, theme: { fonts, colors } }) => {
     const getProperty = getVariantStyles(variant)
     return css`
+      color: ${colors.dark};
       font-family: ${getProperty(fonts, 'family')};
       font-size: ${getProperty(fonts.sizes, 'size')}px;
       line-height: ${getProperty(fonts.lineHeights, 'lineHeight')}px;
