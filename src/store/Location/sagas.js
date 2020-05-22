@@ -1,20 +1,21 @@
-import { put, takeLatest } from 'redux-saga/effects'
+import { put, takeEvery, call } from 'redux-saga/effects'
 import Types from './types'
 import * as actionCreators from './actions'
+import GeocoderService from '@services/api/geocoder'
 
-function* fetchLocation() {
+export function* fetchLocation({ query, resolve, reject }) {
   yield put(actionCreators.fetchLocationRequest())
 
   try {
-    const response = yield fetch('https://jsonplaceholder.typicode.com/posts/1')
-    const JSON = yield response.json()
-    console.log(actionCreators.fetchLocationSuccess())
-    yield put(actionCreators.fetchLocationSuccess(JSON))
+    const locations = yield call(GeocoderService.getGeocode, query)
+    yield put(actionCreators.fetchLocationSuccess(locations))
+    resolve(locations)
   } catch (err) {
     yield put(actionCreators.fetchLocationFailure(err))
+    reject(err)
   }
 }
 
 export default function* actionWatcher() {
-  yield takeLatest(Types.LOCATION_FETCH, fetchLocation)
+  yield takeEvery(Types.LOCATION_FETCH, fetchLocation)
 }
