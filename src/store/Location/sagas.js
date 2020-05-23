@@ -6,8 +6,6 @@ import GeocoderService from '@services/api/geocoder'
 const DEBOUNCE_TIMEOUT = 1000
 
 export function* fetchLocation({ query, resolve, reject }) {
-  yield put(actionCreators.fetchLocationRequest())
-
   try {
     const locations = yield call(GeocoderService.getGeocode, query)
     yield put(actionCreators.fetchLocationSuccess(locations))
@@ -19,5 +17,5 @@ export function* fetchLocation({ query, resolve, reject }) {
 }
 
 export default function* actionWatcher() {
-  yield debounce(DEBOUNCE_TIMEOUT, Types.LOCATION_FETCH, fetchLocation)
+  yield debounce(DEBOUNCE_TIMEOUT, Types.FETCH, fetchLocation)
 }

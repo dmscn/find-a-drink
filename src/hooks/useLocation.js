@@ -7,7 +7,7 @@ export default function useLocation() {
 
   const getLocation = query =>
     promisifyActionDispatch(dispatch, {
-      type: LocationTypes.LOCATION_FETCH,
+      type: LocationTypes.FETCH,
       query,
     })
 
