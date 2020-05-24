@@ -12,6 +12,7 @@ export function* fetchPocs({ coordinates, resolve, reject }) {
     yield put(actionCreators.fetchPocsSuccess(pocs))
     resolve(pocs)
   } catch (err) {
+    yield put(actionCreators.fetchPocsFailure())
     reject(err)
   }
 }

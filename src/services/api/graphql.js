@@ -63,8 +63,8 @@ export const getPocs = () => {
   return graphqlFetcher(query, variables)
 }
 
-export const getProducts = {
-  query: `
+export const getProducts = pocId => {
+  const query = `
     query poc($id: ID!, $categoryId: Int, $search: String){
       poc(id: $id) {
         id
@@ -101,12 +101,15 @@ export const getProducts = {
         }
       }
     }
-  `,
-  variables: {
-    id: '532',
+  `
+
+  const variables = {
+    id: pocId,
     search: '',
     categoryId: null,
-  },
+  }
+
+  return graphqlFetcher(query, variables)
 }
 
 export const getCategories = {
