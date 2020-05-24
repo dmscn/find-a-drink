@@ -25,7 +25,7 @@ const TextField = styled.input`
     box-shadow: ${elevations.small};
 
     &:focus {
-      border: 2px solid ${colors.primary[1]};
+      border: 2px solid ${colors.primary[2]};
       background-color: ${colors.white};
     }
   `}
