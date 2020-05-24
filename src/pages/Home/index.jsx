@@ -1,7 +1,9 @@
 import React from 'react'
-import Autocomplete from '@components/Autocomplete'
+import { useHistory } from 'react-router-dom'
 import useLocation from '@hooks/useLocation'
-import { useSelector } from 'react-redux'
+
+import Autocomplete from '@components/Autocomplete'
+import * as Styled from './styled'
 
 const formatLabel = ({ street, city }) => `${street}, ${city}`
 
@@ -13,13 +15,16 @@ const formatLocations = locations =>
       value: latLng,
     }))
 
-const Home = () => {
+const HomePage = () => {
   const [location, setLocation] = React.useState('')
   const [suggestions, setSuggestions] = React.useState(null)
-  const { loading } = useSelector(state => state.location)
+  const [loading, setLoading] = React.useState(false)
   const { getLocation } = useLocation()
 
+  const history = useHistory()
+
   const getSuggestions = async query => {
+    setLoading(true)
     try {
       const locations = await getLocation(query)
       console.log({ locations, suggestions: formatLocations(locations) })
@@ -27,6 +32,8 @@ const Home = () => {
     } catch (err) {
       console.error(err)
       setSuggestions([])
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -36,20 +43,17 @@ const Home = () => {
     getSuggestions(value)
   }
 
-  const handleSelection = ({ value }) => {
-    console.log(value)
+  const redirectToProductsPage = (lat, lng) => {
+    if (!lat || !lng) return null
+    history.push(`/products/${lat}/${lng}`)
+  }
+
+  const handleSelection = ({ value: { lat, lng } }) => {
+    redirectToProductsPage(lat, lng)
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: '100%',
-        height: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <Styled.Wrapper>
       <Autocomplete
         placeholder="Digite sua localização"
         value={location}
@@ -58,8 +62,8 @@ const Home = () => {
         onSelection={handleSelection}
         isLoading={loading}
       />
-    </div>
+    </Styled.Wrapper>
   )
 }
 
-export default Home
+export default HomePage
