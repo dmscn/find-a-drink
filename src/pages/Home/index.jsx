@@ -3,6 +3,10 @@ import { useHistory } from 'react-router-dom'
 import useLocation from '@hooks/useLocation'
 
 import Autocomplete from '@components/Autocomplete'
+import Page from '@components/Page'
+import Header from '@components/Header'
+import Text from '@components/Text'
+
 import * as Styled from './styled'
 
 const formatLabel = ({ street, city }) => `${street}, ${city}`
@@ -53,16 +57,23 @@ const HomePage = () => {
   }
 
   return (
-    <Styled.Wrapper>
-      <Autocomplete
-        placeholder="Digite sua localização"
-        value={location}
-        suggestions={suggestions}
-        onChange={handleType}
-        onSelection={handleSelection}
-        isLoading={loading}
-      />
-    </Styled.Wrapper>
+    <Page>
+      <Header />
+      <Styled.Wrapper>
+        <Text variant="header">Onde você está? 🔍</Text>
+        <Styled.InputWrapper>
+          <Autocomplete
+            placeholder="Digite sua localização"
+            value={location}
+            suggestions={suggestions}
+            onChange={handleType}
+            onSelection={handleSelection}
+            isLoading={loading}
+          />
+        </Styled.InputWrapper>
+        <Text variant="small">Clique em uma das sugestões para prosseguir</Text>
+      </Styled.Wrapper>
+    </Page>
   )
 }
 
