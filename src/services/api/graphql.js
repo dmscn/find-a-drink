@@ -1,15 +1,17 @@
-export const getPOC = {
-  query: `
-    query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
+import createGraphqlFetcher from './helpers/graphqlFetcher'
+
+const BASE_URL = 'https://api.code-challenge.ze.delivery/public/graphql'
+const graphqlFetcher = createGraphqlFetcher(fetch, BASE_URL)
+
+export const getPocs = ({ latitude, longitude }) => {
+  const query = `
+  query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
     pocSearch(now: $now, algorithm: $algorithm, lat: $lat, long: $long) {
-      __typename
       id
       status
       tradingName
       officialName
       deliveryTypes {
-        __typename
-        pocDeliveryTypeId
         deliveryTypeId
         price
         title
@@ -17,27 +19,22 @@ export const getPOC = {
         active
       }
       paymentMethods {
-        __typename
-        pocPaymentMethodId
         paymentMethodId
         active
         title
         subtitle
       }
       pocWorkDay {
-        __typename
         weekDay
         active
         workingInterval {
-          __typename
           openingTime
           closingTime
         }
       }
       address {
-        __typename
         address1
-        address2}
+        address2
         number
         city
         province
@@ -45,18 +42,19 @@ export const getPOC = {
         coordinates
       }
       phone {
-        __typename
         phoneNumber
       }
     }
   }
-  `,
-  variables: {
+  `
+  const variables = {
     algorithm: 'NEAREST',
-    lat: '-23.632919',
-    long: '-46.699453',
-    now: '2017-08-01T20:00:00.000Z',
-  },
+    lat: latitude,
+    long: longitude,
+    now: new Date().toISOString(),
+  }
+
+  return graphqlFetcher(query, variables)
 }
 
 export const getProducts = {
@@ -105,7 +103,7 @@ export const getProducts = {
   },
 }
 
-export const getCategoryList = {
+export const getCategories = {
   query: `
     query allCategoriesSearch {
       allCategory{
@@ -119,4 +117,10 @@ export const getCategoryList = {
     search: '',
     categoryId: null,
   },
+}
+
+export default {
+  getPocs,
+  getProducts,
+  getCategories,
 }
