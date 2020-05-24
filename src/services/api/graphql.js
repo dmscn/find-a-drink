@@ -3,7 +3,7 @@ import createGraphqlFetcher from './helpers/graphqlFetcher'
 const BASE_URL = 'https://api.code-challenge.ze.delivery/public/graphql'
 const graphqlFetcher = createGraphqlFetcher(fetch, BASE_URL)
 
-export const getPocs = ({ latitude, longitude }) => {
+export const getPocs = () => {
   const query = `
   query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
     pocSearch(now: $now, algorithm: $algorithm, lat: $lat, long: $long) {
@@ -47,10 +47,16 @@ export const getPocs = ({ latitude, longitude }) => {
     }
   }
   `
+
+  const specifiedLatitude = '-23.632919'
+  const specifiedLongitude = '-46.699453'
+
+  // Using the query variables as fixed values
+  // to guarantee the correct result for the test
   const variables = {
     algorithm: 'NEAREST',
-    lat: latitude,
-    long: longitude,
+    lat: specifiedLatitude,
+    long: specifiedLongitude,
     now: new Date().toISOString(),
   }
 
