@@ -1,16 +1,28 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import usePocs from '@hooks/usePocs'
+import Page from '@components/Page'
+import Text from '@components/Text'
+import PocRow from './PocRow'
 
 import * as Styled from './styled'
 
 const ProductsPage = () => {
   const { lat, lng } = useParams()
-  const [pocs, pocsAreLoading] = usePocs(lat, lng)
+  const [[poc], pocsAreLoading] = usePocs(lat, lng)
 
-  console.log({ pocs, pocsAreLoading })
-
-  return <Styled.Wrapper>{`${lat} ${lng} / POCS: ${pocs}`}</Styled.Wrapper>
+  return (
+    <Page>
+      <Text variant="header">Produtos</Text>
+      {pocsAreLoading ? (
+        <Styled.LoadingState>
+          Buscando estabelecimentos próximos...
+        </Styled.LoadingState>
+      ) : (
+        <PocRow poc={poc} />
+      )}
+    </Page>
+  )
 }
 
 export default ProductsPage
