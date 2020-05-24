@@ -13,10 +13,16 @@ const specs = {
     weight: 'regular',
     lineHeight: 'medium',
   },
+  subtitle: {
+    family: 'Lato',
+    size: 'medium',
+    weight: 'bold',
+    lineHeight: 'medium',
+  },
   body: {
     family: 'SourceSansPro',
     size: 'medium',
-    weight: 'semibold',
+    weight: 'regular',
     lineHeight: 'small',
   },
   small: {
