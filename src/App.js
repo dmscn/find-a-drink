@@ -18,10 +18,10 @@ const App = () => (
       <StoreProvider store={store}>
         <Router history={history}>
           <Switch>
-            <Route path="/products">
+            <Route exact path="/products/:lat/:lng">
               <Products />
             </Route>
-            <Route path="/">
+            <Route exact path="/">
               <Home />
             </Route>
           </Switch>
