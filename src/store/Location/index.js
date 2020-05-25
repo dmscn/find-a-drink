@@ -1,9 +1,6 @@
 import Types from './types'
 
-const INITIAL_STATE = {
-  lat: null,
-  lng: null,
-}
+const INITIAL_STATE = []
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
