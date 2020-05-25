@@ -9,7 +9,14 @@ import * as Styled from './styled'
 
 const ProductsPage = () => {
   const { lat, lng } = useParams()
-  const [[poc], pocsAreLoading] = usePocs(lat, lng)
+  const pocs = usePocs()
+  const [poc] = pocs.value
+  const { getPocs } = pocs.methods
+  const [pocsAreLoading] = pocs.states
+
+  React.useEffect(() => {
+    getPocs({ latitude: lat, longitude: lng })
+  }, [lat, lng])
 
   return (
     <Page>
