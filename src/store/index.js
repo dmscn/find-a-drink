@@ -6,11 +6,13 @@ import rootSaga from './sagas'
 import locationReducer from './Location'
 import pocsReducer from './Pocs'
 import productsReducer from './Products'
+import cartReducer from './Cart'
 
 const reducers = combineReducers({
   location: locationReducer,
   pocs: pocsReducer,
   products: productsReducer,
+  cart: cartReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()
