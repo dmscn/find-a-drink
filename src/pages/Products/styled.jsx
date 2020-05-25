@@ -4,6 +4,16 @@ import styled, { css } from 'styled-components'
 import LoadingSpinner from '@components/LoadingSpinner'
 import Text from '@components/Text'
 
+export const Content = styled.main`
+  ${({ theme: { spacing } }) => css`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: ${spacing.large}px;
+  `}
+`
+
 const LoadingWrapper = styled.section`
   display: flex;
   flex: 1;

@@ -4,6 +4,7 @@ import usePocs from '@hooks/usePocs'
 import Page from '@components/Page'
 import Text from '@components/Text'
 import PocRow from './PocRow'
+import Header from '@components/Header'
 
 import * as Styled from './styled'
 
@@ -20,14 +21,17 @@ const ProductsPage = () => {
 
   return (
     <Page>
-      <Text variant="header">Produtos</Text>
-      {pocsAreLoading ? (
-        <Styled.LoadingState>
-          Buscando estabelecimentos próximos...
-        </Styled.LoadingState>
-      ) : (
-        <PocRow poc={poc} />
-      )}
+      <Header withCart />
+      <Styled.Content>
+        <Text variant="header">Produtos</Text>
+        {pocsAreLoading ? (
+          <Styled.LoadingState>
+            Buscando estabelecimentos próximos...
+          </Styled.LoadingState>
+        ) : (
+          <PocRow poc={poc} />
+        )}
+      </Styled.Content>
     </Page>
   )
 }
