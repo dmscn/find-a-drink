@@ -1,19 +1,34 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import LocationTypes from '@store/Location/types'
 import promisifyActionDispatch from '@utils/promisifyActionDispatch'
 
-export default function useLocation() {
+export default function useGeocode() {
+  const locations = useSelector(state => state.location)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const dispatch = useDispatch()
 
-  const getLocation = query => {
+  const getGeocode = async query => {
     setLoading(true)
-    promisifyActionDispatch(dispatch, {
-      type: LocationTypes.FETCH,
-      query,
-    }).then(() => setLoading(false))
+    try {
+      await promisifyActionDispatch(dispatch, {
+        type: LocationTypes.FETCH,
+        query,
+      })
+    } catch (err) {
+      setError(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  return [getLocation, loading]
+  const hookInterface = [locations, { getGeocode }, [loading, error]]
+  ;[
+    hookInterface.values,
+    hookInterface.methods,
+    hookInterface.states,
+  ] = hookInterface
+
+  return hookInterface
 }

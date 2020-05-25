@@ -11,7 +11,7 @@ import * as Styled from './styled'
 
 const formatLabel = ({ street, city }) => `${street}, ${city}`
 
-const formatLocations = locations =>
+const formatSuggestions = locations =>
   locations
     .filter(({ street, city }) => Boolean(street && city))
     .map(({ latLng, ...location }) => ({
@@ -20,31 +20,15 @@ const formatLocations = locations =>
     }))
 
 const HomePage = () => {
-  const [location, setLocation] = React.useState('')
-  const [suggestions, setSuggestions] = React.useState(null)
-  const [loading, setLoading] = React.useState(false)
-  const { getLocation } = useLocation()
+  const [query, setQuery] = React.useState('')
+  const [locations, { getGeocode }, [loading]] = useLocation()
 
   const history = useHistory()
 
-  const getSuggestions = async query => {
-    setLoading(true)
-    try {
-      const locations = await getLocation(query)
-      console.log({ locations, suggestions: formatLocations(locations) })
-      setSuggestions(formatLocations(locations))
-    } catch (err) {
-      console.error(err)
-      setSuggestions([])
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const handleType = event => {
     const { value } = event.target
-    setLocation(value)
-    getSuggestions(value)
+    setQuery(value)
+    getGeocode(value)
   }
 
   const redirectToProductsPage = (lat, lng) => {
@@ -64,8 +48,8 @@ const HomePage = () => {
         <Styled.InputWrapper>
           <Autocomplete
             placeholder="Digite sua localização"
-            value={location}
-            suggestions={suggestions}
+            value={query}
+            suggestions={formatSuggestions(locations)}
             onChange={handleType}
             onSelection={handleSelection}
             isLoading={loading}
