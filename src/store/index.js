@@ -4,9 +4,13 @@ import { logger } from 'redux-logger'
 
 import rootSaga from './sagas'
 import locationReducer from './Location'
+import pocsReducer from './Pocs'
+import productsReducer from './Products'
 
 const reducers = combineReducers({
   location: locationReducer,
+  pocs: pocsReducer,
+  products: productsReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

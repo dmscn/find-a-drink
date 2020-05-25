@@ -4,10 +4,10 @@ const INITIAL_STATE = []
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ProductTypes.FETCH_SUCCESS:
+    case ProductTypes.FETCH_PRODUCTS_SUCCESS:
       return action.products
 
-    case ProductTypes.FETCH_FAILURE:
+    case ProductTypes.FETCH_PRODUCTS_FAILURE:
       return []
 
     default:
