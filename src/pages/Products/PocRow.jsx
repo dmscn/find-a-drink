@@ -1,5 +1,6 @@
 import React from 'react'
 import useProducts from '@hooks/useProducts'
+import useCart from '@hooks/useCart'
 import Text from '@components/Text'
 
 import * as Styled from './styled'
@@ -24,8 +25,13 @@ const ButtonRow = ({ isProductOnCart, onAdd, onRemove }) => (
   </Styled.ButtonsRow>
 )
 
-  const removeProductFromCart = id =>
-    setSelectedProducts(products => products.filter(product => product !== id))
+const PocRow = ({ poc = {} }) => {
+  const [products, { getProducts }, [productsAreLoading]] = useProducts()
+  const [cart, { add: addToCart, remove: removeFromCart }] = useCart()
+
+  React.useEffect(() => {
+    getProducts(poc.id)
+  }, [poc])
 
   return (
     <Styled.PocWrapper>
