@@ -2,25 +2,41 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PocsTypes from '@store/Pocs/types'
 import promisifyActionDispatch from '@utils/promisifyActionDispatch'
+import createCancelablePromise from '@utils/cancelablePromise'
 
-export default function usePocs(lat, lng) {
+export default function usePocs() {
   const pocs = useSelector(state => state.pocs)
-  const [loading, setLoading] = useState(true)
-
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const dispatch = useDispatch()
-
-  const getPoc = coordinates =>
-    promisifyActionDispatch(dispatch, {
-      type: PocsTypes.FETCH_POCS,
-      coordinates,
-    })
+  const cancelablePromise = createCancelablePromise()
 
   useEffect(() => {
-    setLoading(true)
-    getPoc({ latitude: lat, longitude: lng }).then(() => {
-      setLoading(false)
-    })
-  }, [lat, lng])
+    return () => cancelablePromise.cancel()
+  }, [])
 
-  return [pocs, loading]
+  const getPocs = async coordinates => {
+    setLoading(true)
+    try {
+      await cancelablePromise(
+        promisifyActionDispatch(dispatch, {
+          type: PocsTypes.FETCH_POCS,
+          coordinates,
+        })
+      )
+    } catch (err) {
+      setError(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const hookInterface = [pocs, { getPocs }, [loading, error]]
+  ;[
+    hookInterface.value,
+    hookInterface.methods,
+    hookInterface.states,
+  ] = hookInterface
+
+  return hookInterface
 }
