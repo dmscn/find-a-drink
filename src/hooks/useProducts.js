@@ -1,11 +1,11 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import ProductTypes from '@store/Products/types'
 import promisifyActionDispatch from '@utils/promisifyActionDispatch'
 
 export default function useProducts(pocId) {
-  const [products, setProducts] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
+  const products = useSelector(state => state.products)
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -15,10 +15,9 @@ export default function useProducts(pocId) {
       id,
     })
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLoading(true)
-    getProducts(pocId).then(products => {
-      setProducts(products)
+    getProducts(pocId).then(() => {
       setLoading(false)
     })
   }, [pocId])

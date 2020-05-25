@@ -1,11 +1,11 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import PocsTypes from '@store/Pocs/types'
 import promisifyActionDispatch from '@utils/promisifyActionDispatch'
 
 export default function usePocs(lat, lng) {
-  const [pocs, setPocs] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
+  const pocs = useSelector(state => state.pocs)
+  const [loading, setLoading] = useState(true)
 
   const dispatch = useDispatch()
 
@@ -15,10 +15,9 @@ export default function usePocs(lat, lng) {
       coordinates,
     })
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLoading(true)
-    getPoc({ latitude: lat, longitude: lng }).then(pocs => {
-      setPocs(pocs)
+    getPoc({ latitude: lat, longitude: lng }).then(() => {
       setLoading(false)
     })
   }, [lat, lng])
