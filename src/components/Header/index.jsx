@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import Cart from '@components/Cart'
 
 const Wrapper = styled.header`
   ${({ theme: { spacing, colors, elevations } }) => css`
@@ -8,6 +9,7 @@ const Wrapper = styled.header`
     height: ${spacing.huge}px;
     background: ${colors.primary[1]};
     box-shadow: ${elevations.medium};
+    justify-content: space-between;
   `}
 `
 
@@ -18,10 +20,11 @@ const Logo = styled.span`
   `}
 `
 
-export default function Header() {
+export default function Header({ withCart }) {
   return (
     <Wrapper>
       <Logo>🍻</Logo>
+      {withCart && <Cart />}
     </Wrapper>
   )
 }
