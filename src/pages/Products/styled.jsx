@@ -76,6 +76,7 @@ export const Image = styled.img`
   ${({ theme: { spacing } }) => css`
     width: 100%;
     min-height: ${spacing.huge * 4}px;
+    margin-bottom: ${spacing.medium}px;
   `}
 `
 
