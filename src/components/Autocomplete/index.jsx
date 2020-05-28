@@ -78,7 +78,11 @@ const Autocomplete = ({ suggestions, isLoading, onSelection, ...props }) => (
             const { value, label } = suggestion
 
             return (
-              <MenuItem key={value} onClick={() => onSelection(suggestion)}>
+              <MenuItem
+                key={JSON.stringify(value)}
+                onClick={() => onSelection(suggestion)}
+                data-testid="autocomplete-option"
+              >
                 <Text variant="small">{label}</Text>
               </MenuItem>
             )
