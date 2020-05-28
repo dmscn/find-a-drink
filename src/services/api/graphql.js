@@ -1,9 +1,9 @@
 import createGraphqlFetcher from './helpers/graphqlFetcher'
 
 const BASE_URL = 'https://api.code-challenge.ze.delivery/public/graphql'
-const graphqlFetcher = createGraphqlFetcher(fetch, BASE_URL)
 
 export const getPocs = () => {
+  const graphqlFetcher = createGraphqlFetcher(fetch, BASE_URL)
   const query = `
   query pocSearchMethod($now: DateTime!, $algorithm: String!, $lat: String!, $long: String!) {
     pocSearch(now: $now, algorithm: $algorithm, lat: $lat, long: $long) {
@@ -64,6 +64,7 @@ export const getPocs = () => {
 }
 
 export const getProducts = pocId => {
+  const graphqlFetcher = createGraphqlFetcher(fetch, BASE_URL)
   const query = `
     query poc($id: ID!, $categoryId: Int, $search: String){
       poc(id: $id) {
@@ -112,24 +113,7 @@ export const getProducts = pocId => {
   return graphqlFetcher(query, variables)
 }
 
-export const getCategories = {
-  query: `
-    query allCategoriesSearch {
-      allCategory{
-        title
-        id
-      }
-    }
-  `,
-  variables: {
-    id: '532',
-    search: '',
-    categoryId: null,
-  },
-}
-
 export default {
   getPocs,
   getProducts,
-  getCategories,
 }
