@@ -8,7 +8,7 @@ import * as Styled from './styled'
 const FALLBACK_IMAGE_URL =
   'https://stamandtrade.com/wp-content/uploads/2017/03/no-image-available.jpg'
 
-const formatNumberToBRL = number =>
+export const formatNumberToBRL = number =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
     number
   )
@@ -51,7 +51,9 @@ const PocRow = ({ poc = {} }) => {
             return (
               <Styled.ProductsListItem key={id}>
                 <Styled.Image src={url} onError={applyFallbackImage} />
-                <Text variant="subtitle">{title}</Text>
+                <Text variant="subtitle" data-testid="product-item">
+                  {title}
+                </Text>
                 <Text variant="body">{formatNumberToBRL(price)}</Text>
                 <ButtonRow
                   isProductOnCart={cart.includes(id)}
