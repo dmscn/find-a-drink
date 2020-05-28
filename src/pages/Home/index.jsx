@@ -9,9 +9,9 @@ import Text from '@components/Text'
 
 import * as Styled from './styled'
 
-const formatLabel = ({ street, city }) => `${street}, ${city}`
+export const formatLabel = ({ street, city }) => `${street}, ${city}`
 
-const formatSuggestions = locations =>
+export const formatSuggestions = locations =>
   locations
     .filter(({ street, city }) => Boolean(street && city))
     .map(({ latLng, ...location }) => ({
