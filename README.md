@@ -1,4 +1,4 @@
-# ze-delivery-api-consumer
+# 🍻 Find a Drink!
 
 ### What was used in this project
 
@@ -13,10 +13,6 @@
 ### Architecture
 
 * **Theme** 💅 
-
-*Theme architecture was based on **[Yoga Design System](https://github.com/Gympass/yoga)** principles.*
-
-> Yoga is the Design System used here at Gympass and made by ourselves 
 
 *In my theme I exposed some pre-defined properties I would need for basic styling in my App. They also helps to maintaining consistency and to boilerplate some styling like shadows and elevations*
 
