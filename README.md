@@ -1,5 +1,7 @@
 # 🍻 Find a Drink!
 
+![image](https://user-images.githubusercontent.com/20416768/85180733-849e7780-b25a-11ea-911a-45aea20240dc.png)
+
 ### What was used in this project
 
 * React
